@@ -28,9 +28,7 @@ def encriptar(chave, texto):
     for letra in alfabeto[:10]:
         posicao_no_quadrado = conteudo_quadrado.index(letra)
         conteudo_quadrado.insert(posicao_no_quadrado + 1, numeros[alfabeto.index(letra)])
-    print("Conteudo por extenso: ")
-    
-    print(conteudo_quadrado)
+
     print("Quantidade: " + str(len(conteudo_quadrado)))
 
     print("Quadrado de polibio")
@@ -41,6 +39,30 @@ def encriptar(chave, texto):
 
     for i in quadrado_de_polibio:
         print(i)
+    
+    # Cifragem do texto
+    cifrado = ""
+    texto = texto.replace(' ', '')
+    
+    relacao = {
+        0: 'A',
+        1: 'D',
+        2: 'F',
+        3: 'G',
+        4: 'V',
+        5: 'X'
+    }
+    
+    for letra in texto:
+        for i in range(6):
+            for j in range(6):
+                if quadrado_de_polibio[i][j] == letra:
+                    cifrado += relacao[i]
+                    cifrado += relacao[j]
+                    break
+
+    print(cifrado)
+        
 
 while True:
     print('===========================================')
