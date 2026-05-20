@@ -4,4 +4,4 @@ Repositório para aplicação de algoritmos de encriptação, cifras e estaganog
 
 ## Já adicionados
 
-- Cifra ADFGVX
+- Cifra ADFGVX (em andamento)
