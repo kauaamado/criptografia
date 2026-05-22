@@ -31,11 +31,43 @@ def preencher_quadrado_de_polibio(chave_limpa, texto):
         for j in range(6):
             quadrado_de_polibio[i].append(conteudo_quadrado[i * 6 + j])
 
+    return quadrado_de_polibio
+
 def exibir_quadrado_de_polibio(quadrado_de_polibio):
     for i in quadrado_de_polibio:
         print(i)
 
+def transposicao_colunar(chave_limpa, texto_substituido):
+    # O enumerate foi usado para obter a posição original de cada letra da chave
+    # enumerate('MARTE') gera: [(0, 'M'), (1, 'A'), (2, 'R'), (3, 'T'), (4, 'E')]
+    colunas_com_indice = list(enumerate(chave_limpa))
+    
+    # Ordena alfabeticamente baseando-se na letra (que é o item [1] de cada tupla)
+    # Resultado para 'MARTE': [(1, 'A'), (4, 'E'), (0, 'M'), (2, 'R'), (3, 'T')]
+    colunas_com_indice.sort(key=lambda x: x[1])
+
+    texto_cifrado_transposto = []
+    tamanho_chave = len(chave_limpa)
+
+    # Extrai as colunas usando fatiamento (slicing)
+    for indice_original, _ in colunas_com_indice: # _ ignora o item da tupla, nesse caso, a letra.
+        
+        # O "pulo do gato": O fatiamento [indice_original :: tamanho_chave] 
+        # pega a letra no índice inicial e pula de N em N casas (onde N é o tamanho da chave).
+        # Isso varre a coluna inteira de cima a baixo, independente de quantas linhas existam,
+        # e lida automaticamente com colunas que terminam mais cedo.
+        coluna_extraida = texto_substituido[indice_original :: tamanho_chave]
+        
+        # Usamos o método .append() para adicionar a coluna inteira na nossa lista
+        texto_cifrado_transposto.append(coluna_extraida)
+
+    # 4. Usar o método "".join() para unificar a lista de strings em um texto só
+    texto_final = "".join(texto_cifrado_transposto)
+    
+    return texto_final
+
 def encriptar(chave, texto):
+    
     chave = Utils(chave)
     texto = texto.lower()
 
@@ -46,7 +78,7 @@ def encriptar(chave, texto):
     exibir_quadrado_de_polibio(quadrado_de_polibio)
     
     # Cifragem do texto
-    cifrado = ""
+    texto_substituido = ""
     texto = texto.replace(' ', '')
     
     relacao = {
@@ -62,11 +94,13 @@ def encriptar(chave, texto):
         for i in range(6):
             for j in range(6):
                 if quadrado_de_polibio[i][j] == letra:
-                    cifrado += relacao[i]
-                    cifrado += relacao[j]
+                    texto_substituido += relacao[i]
+                    texto_substituido += relacao[j]
                     break
 
-    print(cifrado)
+    texto_cifrado = transposicao_colunar(chave_limpa, texto_substituido)
+    
+    return texto_cifrado
         
 
 while True:
@@ -88,7 +122,7 @@ while True:
             chave = input('Insira a chave: ')
             texto = input('Insira o texto: ')
             
-            encriptar(chave, texto)
+            print(encriptar(chave, texto))
         elif opcao == '2':
             pass
         elif opcao == '3':
