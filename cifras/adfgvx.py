@@ -12,14 +12,10 @@ menu = {
     2: 'Desencriptar',
     3: 'Sair'}
 
-def encriptar(chave, texto):
-    chave = Utils(chave)
-    texto = texto.lower()
 
-    chave_limpa = chave.limpar()
-
-    print(chave_limpa)
-    print(texto)
+def preencher_quadrado_de_polibio(chave_limpa, texto):
+    print("[DEBUG] Chave limpa: " + chave_limpa)
+    print("[DEBUG] Texto: " + texto)
 
     conteudo_quadrado = "" + chave_limpa + alfabeto
     conteudo_quadrado = Utils(conteudo_quadrado).limpar()
@@ -29,16 +25,25 @@ def encriptar(chave, texto):
         posicao_no_quadrado = conteudo_quadrado.index(letra)
         conteudo_quadrado.insert(posicao_no_quadrado + 1, numeros[alfabeto.index(letra)])
 
-    print("Quantidade: " + str(len(conteudo_quadrado)))
-
-    print("Quadrado de polibio")
+    print("[DEBUG] Quantidade de casas: " + str(len(conteudo_quadrado)))
 
     for i in range(6):
         for j in range(6):
             quadrado_de_polibio[i].append(conteudo_quadrado[i * 6 + j])
 
+def exibir_quadrado_de_polibio(quadrado_de_polibio):
     for i in quadrado_de_polibio:
         print(i)
+
+def encriptar(chave, texto):
+    chave = Utils(chave)
+    texto = texto.lower()
+
+    chave_limpa = chave.limpar()
+
+    preencher_quadrado_de_polibio(chave_limpa, texto)
+
+    exibir_quadrado_de_polibio(quadrado_de_polibio)
     
     # Cifragem do texto
     cifrado = ""
