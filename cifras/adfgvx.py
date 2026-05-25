@@ -34,17 +34,17 @@ def exibir_quadrado_de_polibio(quadrado_de_polibio):
     for i in quadrado_de_polibio:
         print(i)
 
-def transposicao_colunar(chave_limpa, texto_substituido):
+def transposicao_colunar(chave, texto_substituido):
     # O enumerate foi usado para obter a posição original de cada letra da chave
     # enumerate('MARTE') gera: [(0, 'M'), (1, 'A'), (2, 'R'), (3, 'T'), (4, 'E')]
-    colunas_com_indice = list(enumerate(chave_limpa))
+    colunas_com_indice = list(enumerate(chave))
    
     # Ordena alfabeticamente baseando-se na letra (que é o item [1] de cada tupla)
     # Resultado para 'MARTE': [(1, 'A'), (4, 'E'), (0, 'M'), (2, 'R'), (3, 'T')]
     colunas_com_indice.sort(key=lambda x: x[1])
 
     texto_cifrado_transposto = []
-    tamanho_chave = len(chave_limpa)
+    tamanho_chave = len(chave)
 
     # Extrai as colunas usando fatiamento (slicing)
     for indice_original, _ in colunas_com_indice: # _ ignora o item da tupla, nesse caso, a letra.
@@ -109,9 +109,11 @@ def reverter_transposicao_colunar(chave_limpa, texto_cifrado):
     return texto_substituido_recuperado
 
 def encriptar(chave, texto):
+    chave_transposicao = chave.replace(' ', '')
    
     chave = Utils(chave).limpar()
     texto = texto.lower()
+
 
     chave_limpa = chave
 
@@ -140,15 +142,17 @@ def encriptar(chave, texto):
                     texto_substituido += relacao[j]
                     break
 
-    texto_cifrado = transposicao_colunar(chave_limpa, texto_substituido)
+    texto_cifrado = transposicao_colunar(chave_transposicao, texto_substituido)
    
     return texto_cifrado
 
 def desencriptar(chave, texto_cifrado):
+    chave_transposicao = chave.replace(' ', '')
+
     chave = Utils(chave).limpar()
     chave_limpa = chave
    
-    texto_substituido = reverter_transposicao_colunar(chave_limpa, texto_cifrado)
+    texto_substituido = reverter_transposicao_colunar(chave_transposicao, texto_cifrado)
 
     preencher_quadrado_de_polibio(chave_limpa)
 
