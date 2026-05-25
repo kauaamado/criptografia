@@ -110,10 +110,10 @@ def reverter_transposicao_colunar(chave_limpa, texto_cifrado):
 
 def encriptar(chave, texto):
    
-    chave = Utils(chave)
+    chave = Utils(chave).limpar()
     texto = texto.lower()
 
-    chave_limpa = chave.limpar()
+    chave_limpa = chave
 
     preencher_quadrado_de_polibio(chave_limpa)
 
@@ -183,9 +183,6 @@ while True:
         if opcao == '1':
             print('Encriptando...')
 
-            chave = ""
-            texto = ""
-
             chave = input('Insira a chave: ')
             texto = input('Insira o texto: ')
            
@@ -193,12 +190,9 @@ while True:
         elif opcao == '2':
             print('Desencriptando...')
 
-            chave = ""
-            texto_cifrado = ""
-
             chave = input('Insira a chave: ')
             texto_cifrado = input('Insira o texto cifrado: ')
-            texto_cifrado = texto_cifrado.replace(' ', '')
+            texto_cifrado = texto_cifrado.replace(' ', '').upper()
 
             print(desencriptar(chave, texto_cifrado))
         elif opcao == '3':
