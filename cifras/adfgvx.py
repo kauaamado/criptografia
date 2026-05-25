@@ -20,14 +20,17 @@ def construir_parser():
     modo = parser.add_mutually_exclusive_group(required=True)
     modo.add_argument("-E", "--encrypt", action="store_const", help="Encriptar", dest="modo", const="encriptar")
     modo.add_argument("-D", "--decrypt", action="store_const", help="Decriptar", dest="modo", const="desencriptar")
-    modo.add_argument("-i", "--interactive", action="store_const", help="Modo Interativo", dest="modo", const="interativo")
-    parser.add_argument("-k", "--key", type=str, help="Chave", required=True)
-    parser.add_argument("-t", "--text", type=str, help="Texto", required=True)
+    modo.add_argument("-I", "--interactive", action="store_const", help="Modo Interativo", dest="modo", const="interativo")
+    parser.add_argument("-k", "--key", type=str, help="Chave")
+    parser.add_argument("-t", "--text", type=str, help="Texto")
     return parser
 
 def main():
     parser = construir_parser()
     args = parser.parse_args()
+
+    if args.modo in ("encriptar", "desencriptar") and (not args.key or not args.text):
+        parser.error("nos modos -E/-D, as flags -k/--key e -t/--text são obrigatórias")
 
     def preencher_quadrado_de_polibio(chave_limpa):
         print("[DEBUG] Chave limpa: " + chave_limpa)
