@@ -1,15 +1,7 @@
 # Algoritmo de encriptação ADFGVX
 
 import argparse
-from utilitarios import Utils
-
-alfabeto = 'abcdefghijklmnopqrstuvwxyz'
-numeros = '1234567890'
-
-menu = {
-    1: 'Cifrar',
-    2: 'Decifrar',
-    3: 'Sair'}
+from utilitarios import Alfabeto, Utils, alfabeto, numeros
 
 def construir_parser():
     parser = argparse.ArgumentParser(
@@ -36,7 +28,7 @@ def main():
         print("[DEBUG] Chave limpa: " + chave_limpa)
 
         conteudo_quadrado = "" + chave_limpa + alfabeto
-        conteudo_quadrado = Utils(conteudo_quadrado).limpar()
+        conteudo_quadrado = Utils(conteudo_quadrado, alfabeto).limpar()
         print(conteudo_quadrado)
         conteudo_quadrado = list(conteudo_quadrado)
         for letra in alfabeto[:10]:
@@ -132,7 +124,7 @@ def main():
     def cifrar(chave, texto):
         chave_transposicao = chave.replace(' ', '')
     
-        chave = Utils(chave).limpar()
+        chave = Utils(chave, alfabeto).limpar()
         texto = texto.lower()
 
 
@@ -170,7 +162,7 @@ def main():
     def decifrar(chave, texto_cifrado):
         chave_transposicao = chave.replace(' ', '')
 
-        chave = Utils(chave).limpar()
+        chave = Utils(chave, alfabeto).limpar()
         chave_limpa = chave
     
         texto_substituido = reverter_transposicao_colunar(chave_transposicao, texto_cifrado)
