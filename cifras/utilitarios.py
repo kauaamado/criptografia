@@ -52,7 +52,7 @@ class Utils(Alfabeto):
         super().__init__(texto, alfabeto)
         self.alfabeto = alfabeto
 
-    def menu(self):
+    def menu():
         """Exibe o menu de opções."""
         menu = {
             '1': 'Cifrar',

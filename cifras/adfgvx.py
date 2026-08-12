@@ -187,6 +187,8 @@ def main():
         while True:
             quadrado_de_polibio = [[], [], [], [], [], []] # linha, coluna
 
+            menu = Utils.menu()
+
             print('===========================================')
             print('Bem vindo ao algoritmo de cifragem ADFGVX')
             print('===========================================')
