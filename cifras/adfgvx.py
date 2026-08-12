@@ -7,8 +7,8 @@ alfabeto = 'abcdefghijklmnopqrstuvwxyz'
 numeros = '1234567890'
 
 menu = {
-    1: 'Encriptar',
-    2: 'Desencriptar',
+    1: 'Cifrar',
+    2: 'Decifrar',
     3: 'Sair'}
 
 def construir_parser():
@@ -18,19 +18,19 @@ def construir_parser():
     )
 
     modo = parser.add_mutually_exclusive_group(required=True)
-    modo.add_argument("-E", "--encrypt", action="store_const", help="Encriptar", dest="modo", const="encriptar")
-    modo.add_argument("-D", "--decrypt", action="store_const", help="Decriptar", dest="modo", const="desencriptar")
-    modo.add_argument("-I", "--interactive", action="store_const", help="Modo Interativo", dest="modo", const="interativo")
-    parser.add_argument("-k", "--key", type=str, help="Chave")
-    parser.add_argument("-t", "--text", type=str, help="Texto")
+    modo.add_argument("-C", "--cifrar", action="store_const", help="Cifrar", dest="modo", const="cifrar")
+    modo.add_argument("-D", "--decifrar", action="store_const", help="Decifrar", dest="modo", const="decifrar")
+    modo.add_argument("-I", "--interativo", action="store_const", help="Modo Interativo", dest="modo", const="interativo")
+    parser.add_argument("-c", "--chave", type=str, help="Chave")
+    parser.add_argument("-t", "--texto", type=str, help="Texto")
     return parser
 
 def main():
     parser = construir_parser()
     args = parser.parse_args()
 
-    if args.modo in ("encriptar", "desencriptar") and (not args.key or not args.text):
-        parser.error("nos modos -E/-D, as flags -k/--key e -t/--text são obrigatórias")
+    if args.modo in ("cifrar", "decifrar") and (not args.chave or not args.texto):
+        parser.error("nos modos -C/-D, as flags -c/--chave e -t/--texto são obrigatórias")
 
     def preencher_quadrado_de_polibio(chave_limpa):
         print("[DEBUG] Chave limpa: " + chave_limpa)
@@ -129,7 +129,7 @@ def main():
 
         return texto_substituido_recuperado
 
-    def encriptar(chave, texto):
+    def cifrar(chave, texto):
         chave_transposicao = chave.replace(' ', '')
     
         chave = Utils(chave).limpar()
@@ -167,7 +167,7 @@ def main():
     
         return texto_cifrado
 
-    def desencriptar(chave, texto_cifrado):
+    def decifrar(chave, texto_cifrado):
         chave_transposicao = chave.replace(' ', '')
 
         chave = Utils(chave).limpar()
@@ -208,20 +208,20 @@ def main():
                 print(opcao)
 
                 if opcao == '1':
-                    print('Encriptando...')
+                    print('Cifrando...')
 
                     chave = input('Insira a chave: ')
                     texto = input('Insira o texto: ')
 
-                    print(encriptar(chave, texto))
+                    print(cifrar(chave, texto))
                 elif opcao == '2':
-                    print('Desencriptando...')
+                    print('Decifrando...')
 
                     chave = input('Insira a chave: ')
                     texto_cifrado = input('Insira o texto cifrado: ')
                     texto_cifrado = texto_cifrado.replace(' ', '').upper()
 
-                    print(desencriptar(chave, texto_cifrado))
+                    print(decifrar(chave, texto_cifrado))
                 elif opcao == '3':
                     print('Saindo...')
                     break
@@ -232,13 +232,13 @@ def main():
         print('Obrigado por usar o algoritmo de cifragem ADFGVX')
         print('===========================================')
 
-    if args.modo == "encriptar":
+    if args.modo == "cifrar":
         quadrado_de_polibio = [[], [], [], [], [], []] # linha, coluna
-        print(encriptar(args.key, args.text))
+        print(cifrar(args.chave, args.texto))
 
-    if args.modo == "desencriptar":
+    if args.modo == "decifrar":
         quadrado_de_polibio = [[], [], [], [], [], []] # linha, coluna
-        print(desencriptar(args.key, args.text))
+        print(decifrar(args.chave, args.texto))
 
 if __name__ == '__main__':
     main()
