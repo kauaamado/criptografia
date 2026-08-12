@@ -5,3 +5,4 @@ Repositório para aplicação de algoritmos de encriptação, cifras e estaganog
 ## Já adicionados
 
 - Cifra ADFGVX
+- Cifra de César
